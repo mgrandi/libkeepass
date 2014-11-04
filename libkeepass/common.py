@@ -166,9 +166,9 @@ class KDBFile(object):
         raise NotImplementedError('The write_to() method was not implemented.')
 
     def add_credentials(self, **credentials):
-        if credentials.has_key('password'):
+        if 'password' in credentials.keys():
             self.add_key_hash(sha256(credentials['password']))
-        if credentials.has_key('keyfile'):
+        if 'keyfile' in credentials.keys():
             self.add_key_hash(load_keyfile(credentials['keyfile']))
 
     def clear_credentials(self):
