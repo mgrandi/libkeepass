@@ -249,7 +249,7 @@ class KDB4File(KDBFile):
         combination with the master seed.
         """
         super(KDB4File, self)._make_master_key()
-        composite = sha256(''.join(self.keys))
+        composite = sha256(b''.join(self.keys))
         tkey = transform_key(composite, 
             self.header.TransformSeed, 
             self.header.TransformRounds)
@@ -338,7 +338,7 @@ class KDBXmlExtension:
         requested `length`.
         """
         while length > len(self._salsa_buffer):
-            new_salsa = self.salsa.encryptBytes(str(bytearray(64)))
+            new_salsa = self.salsa.encryptBytes(bytearray(64))
             self._salsa_buffer.extend(new_salsa)
         nacho = self._salsa_buffer[:length]
         del self._salsa_buffer[:length]
@@ -350,7 +350,7 @@ class KDBXmlExtension:
         Returns an unprotected string.
         """
         tmp = base64.b64decode(string)
-        return str(xor(tmp, self._get_salsa(len(tmp))))
+        return xor(tmp, self._get_salsa(len(tmp))).decode("utf-8")
 
     def _protect(self, string):
         """

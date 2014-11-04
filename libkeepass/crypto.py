@@ -12,7 +12,10 @@ AES_BLOCK_SIZE = 16
 
 def sha256(s):
     """Return SHA256 digest of the string `s`."""
-    return hashlib.sha256(s).digest()
+    data = s
+    if not isinstance(s, type(b'')):
+        data = s.encode("utf-8")
+    return hashlib.sha256(data).digest()
 
 def transform_key(key, seed, rounds):
     """Transform `key` with `seed` `rounds` times using AES ECB."""
@@ -34,7 +37,7 @@ def aes_cbc_encrypt(data, key, enc_iv):
     return cipher.encrypt(data)
 
 def unpad(data):
-    extra = ord(data[-1])
+    extra = data[-1]
     return data[:len(data)-extra]
 
 def pad(s):
