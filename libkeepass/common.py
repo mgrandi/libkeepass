@@ -1,5 +1,15 @@
 # -*- coding: utf-8 -*-
 
+import io
+import struct
+import base64
+import hashlib
+
+from .crypto import sha256
+
+from lxml import etree
+
+
 # file header
 
 class HeaderDictionary(dict):
@@ -109,8 +119,7 @@ class HeaderDictionary(dict):
 
 # file baseclass
 
-import io
-from crypto import sha256
+
 
 class KDBFile(object):
     def __init__(self, stream=None, **credentials):
@@ -207,10 +216,6 @@ class KDBFile(object):
 
 # loading keyfiles
 
-import base64
-import hashlib
-from lxml import etree
-
 def load_keyfile(filename):
     try:
         return load_xml_keyfile(filename)
@@ -260,7 +265,6 @@ def load_plain_keyfile(filename):
 
 # 
 
-import struct
 
 def stream_unpack(stream, offset, length, typecode='I'):
     if offset is not None:

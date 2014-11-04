@@ -6,18 +6,21 @@ import gzip
 import struct
 import hashlib
 import base64
+import binascii
 
 
-from crypto import xor, sha256, aes_cbc_decrypt, aes_cbc_encrypt
-from crypto import transform_key, pad, unpad
+from .crypto import Salsa20
+from .crypto import xor, sha256, aes_cbc_decrypt, aes_cbc_encrypt
+from .crypto import transform_key, pad, unpad
+from .common import load_keyfile, stream_unpack
+from .common import KDBFile, HeaderDictionary
+from .hbio import HashedBlockIO
 
-from common import load_keyfile, stream_unpack
-
-from common import KDBFile, HeaderDictionary
-from hbio import HashedBlockIO
+from lxml import etree
+from lxml import objectify
 
 
-KDB4_SALSA20_IV = bytes('e830094b97205d2a'.decode('hex'))
+KDB4_SALSA20_IV = binascii.unhexlify('e830094b97205d2a')
 KDB4_SIGNATURE = (0x9AA2D903, 0xB54BFB67)
 
 
@@ -252,9 +255,7 @@ class KDB4File(KDBFile):
         self.master_key = sha256(self.header.MasterSeed + tkey)
 
 
-from lxml import etree
-from lxml import objectify
-from crypto import Salsa20
+
 
 class KDBXmlExtension:
     """
