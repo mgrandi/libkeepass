@@ -2,6 +2,10 @@
 import hashlib
 import struct
 
+# this binds the name 'Salsa20' to whatever we are using,
+# so if we change libraries, just change this line and everything else will use it
+from .pureSalsa20 import Salsa20
+
 from Crypto.Cipher import AES
 
 AES_BLOCK_SIZE = 16

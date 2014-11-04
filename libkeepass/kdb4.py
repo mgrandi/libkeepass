@@ -9,8 +9,6 @@ import base64
 import binascii
 
 
-# this binds the name 'Salsa20' to whatever we are using,
-# so if we change libraries, just change this line and everything else will use it
 from .crypto import Salsa20 
 
 from .crypto import xor, sha256, aes_cbc_decrypt, aes_cbc_encrypt
